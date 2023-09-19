@@ -7,12 +7,13 @@ const bcrypt = require("bcryptjs");
 const Mail = require("../mails");
 
 exports.signup = async (req, res) => {
+  const {firstname, lastname, email, password} = req.body.user
   try {
     const user = await User.create({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: bcrypt.hashSync(password, 8),
     });
 
     if (req.body.roles) {
@@ -41,10 +42,12 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
+  console.log("coucou");
+  const {email, password} = req.body
   try {
     const user = await User.findOne({
       where: {
-        email: req.body.email,
+        email: email,
       },
     });
 
@@ -53,7 +56,7 @@ exports.signin = async (req, res) => {
     }
 
     const passwordIsValid = bcrypt.compareSync(
-      req.body.password,
+      password,
       user.password
     );
 
