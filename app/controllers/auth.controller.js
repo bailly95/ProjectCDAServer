@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const Mail = require("../mails");
 
 exports.signup = async (req, res) => {
-  const {firstname, lastname, email, password} = req.body.user
+  const {firstname, lastname, email, password} = req.body
   try {
     const user = await User.create({
       firstname: firstname,
@@ -42,7 +42,6 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  console.log("coucou");
   const {email, password} = req.body
   try {
     const user = await User.findOne({
