@@ -33,7 +33,7 @@ exports.signup = async (req, res) => {
         lastname: user.lastname,
         email: user.email,
       };
-      // await Mail.newUser(req, res, message);
+      //await Mail.newUser(req, res, message);
       res.status(201).json({ message: "User was registered successfully!" });
     }
   } catch (err) {
