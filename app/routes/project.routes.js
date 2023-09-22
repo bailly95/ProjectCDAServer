@@ -12,6 +12,8 @@ router.get(
 
 router.post("/", authJwt.verifyToken, controller.createProject);
 
+router.get("/:projectId", authJwt.verifyToken, controller.getProject);
+
 router.post("/", controller.createProject);
 
 module.exports = router;

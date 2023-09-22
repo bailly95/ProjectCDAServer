@@ -6,7 +6,6 @@ const user = require("./app/routes/user.routes");
 const task = require("./app/routes/task.routes");
 const project = require("./app/routes/project.routes");
 const comment = require("./app/routes/comment.routes");
-const article = require("./app/routes/article.routes");
 
 
 const db = require("./app/models");
@@ -26,8 +25,7 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-//db.sequelize.sync()
-//initialise les role
+
 // db.sequelize.sync({force: true}).then(() => {
 //   initial();
 // });
@@ -64,8 +62,6 @@ app.use("/api/project", project, setCommonHeaders);
 
 // comment
 app.use("/api/comment", comment, setCommonHeaders);
-
-app.use("/api/article", article, setCommonHeaders);
 
 
 //listen for requests

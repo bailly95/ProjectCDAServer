@@ -25,4 +25,6 @@ router.post("/forgotpassword", controller.forgotPassword);
 
 router.post("/updatepassword", controller.updatePassword);
 
+router.get("/:userId/project", authJwt.verifyToken, controller.getProjectByUserId);
+
 module.exports = router;
