@@ -4,6 +4,7 @@ const Project = db.project;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Mail = require("../mails");
+
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll();
