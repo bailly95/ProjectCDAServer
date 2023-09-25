@@ -3,32 +3,60 @@ const db = require("../models");
 const User = db.user;
 const Project = db.project;
 
+//verify for header
+// verifyToken = (req, res, next) => {
+//   const authHeader = req.get("Authorization");
+//   if (!authHeader) return res.status(401).json({ message: "not authenticated" });
+
+//   const token = authHeader.split(" ")[1];
+//   jwt.verify(token, process.env.SECRET, (err, decoded) => {
+//     if (err) return res.status(401).send({ message: "Unauthorized!" });
+
+//     req.userId = decoded.id;
+//     next();
+//   });
+// };
+
+//verify for session
 verifyToken = (req, res, next) => {
-  const authHeader = req.get("Authorization");
-  if (!authHeader) return res.status(401).json({ message: "not authenticated" });
+  let token = req.session.token;
 
-  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(403).send({
+      message: "No token provided!",
+    });
+  }
+
   jwt.verify(token, process.env.SECRET, (err, decoded) => {
-    if (err) return res.status(401).send({ message: "Unauthorized!" });
-
+    if (err) {
+      return res.status(401).send({
+        message: "Unauthorized!",
+      });
+    }
     req.userId = decoded.id;
     next();
   });
 };
 
 isAdmin = async (req, res, next) => {
-  const user = await User.findByPk(req.userId);
-  const roles = await user.getRoles();
+  try {
+    const user = await User.findByPk(req.userId);
+    const roles = await user.getRoles();
 
-  for (let i = 0; i < roles.length; i++) {
-    if (roles[i].name === "admin") {
-      return next();
+    for (let i = 0; i < roles.length; i++) {
+      if (roles[i].name === "admin") {
+        return next();
+      }
     }
-  }
 
-  res.status(403).send({
-    message: "Require Admin Role!",
-  });
+    return res.status(403).send({
+      message: "Require Admin Role!",
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Unable to validate User role!",
+    });
+  }
 };
 
 isProjectOwner = async (req, res, next) => {
@@ -43,11 +71,9 @@ isProjectOwner = async (req, res, next) => {
     }
 
     if (project.createdBy !== creatorId) {
-      return res
-        .status(403)
-        .json({
-          message: "Vous n'avez pas l'autorisation pour assigner à ce projet",
-        });
+      return res.status(403).json({
+        message: "Vous n'avez pas l'autorisation pour assigner à ce projet",
+      });
     }
 
     next();
