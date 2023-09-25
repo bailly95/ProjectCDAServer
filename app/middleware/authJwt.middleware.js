@@ -3,20 +3,6 @@ const db = require("../models");
 const User = db.user;
 const Project = db.project;
 
-//verify for header
-// verifyToken = (req, res, next) => {
-//   const authHeader = req.get("Authorization");
-//   if (!authHeader) return res.status(401).json({ message: "not authenticated" });
-
-//   const token = authHeader.split(" ")[1];
-//   jwt.verify(token, process.env.SECRET, (err, decoded) => {
-//     if (err) return res.status(401).send({ message: "Unauthorized!" });
-
-//     req.userId = decoded.id;
-//     next();
-//   });
-// };
-
 //verify for session
 verifyToken = (req, res, next) => {
   let token = req.session.token;

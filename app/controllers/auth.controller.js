@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const Mail = require("../mails");
 
 exports.signup = async (req, res) => {
-  const {firstname, lastname, email, password} = req.body
+  const { firstname, lastname, email, password } = req.body;
   try {
     const user = await User.create({
       firstname: firstname,
@@ -29,13 +29,14 @@ exports.signup = async (req, res) => {
       if (result) res.send({ message: "User registered successfully!" });
     } else {
       const result = user.setRoles([1]);
-      
+
       const message = {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
       };
-      if (result) res.status(201).send({ message: "User registered successfully!" });
+      if (result)
+        res.status(201).send({ message: "User registered successfully!" });
       //if (result) await Mail.newUser(req, res, message);
     }
   } catch (err) {
@@ -44,7 +45,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  const {email, password} = req.body.user
+  const { email, password } = req.body;
   try {
     const user = await User.findOne({
       where: {
@@ -56,10 +57,7 @@ exports.signin = async (req, res) => {
       return res.status(404).send({ message: "User Not found." });
     }
 
-    const passwordIsValid = bcrypt.compareSync(
-      password,
-      user.password
-    );
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
 
     if (!passwordIsValid) {
       return res.status(401).send({
@@ -80,8 +78,6 @@ exports.signin = async (req, res) => {
 
     req.session.token = token;
 
-    
-
     res.status(200).send({
       id: user.id,
       firstname: user.firstname,
@@ -98,7 +94,7 @@ exports.signout = async (req, res) => {
   try {
     req.session = null;
     return res.status(200).send({
-      message: "You've been signed out!"
+      message: "You've been signed out!",
     });
   } catch (err) {
     this.next(err);

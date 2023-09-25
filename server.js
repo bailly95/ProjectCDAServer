@@ -43,13 +43,12 @@ app.use(
 //   initial();
 // });
 
-
 // function initial() {
 //   Role.create({
 //     id: 1,
 //     name: "user"
 //   });
- 
+
 //   Role.create({
 //     id: 2,
 //     name: "admin"
@@ -60,10 +59,7 @@ app.use(
 db.sequelize.sync();
 // Middleware to set common headers
 const setCommonHeaders = (req, res, next) => {
-  res.set(
-    "Access-Control-Allow-Headers",
-    "Origin, Content-Type, Accept"
-  );
+  res.set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
   next();
 };
 
