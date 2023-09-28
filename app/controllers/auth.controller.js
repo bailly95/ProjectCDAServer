@@ -37,7 +37,7 @@ exports.signup = async (req, res) => {
       };
       if (result)
         res.status(201).send({ message: "User registered successfully!" });
-      //if (result) await Mail.newUser(req, res, message);
+      // if (result) await Mail.newUser(req, res, message);
     }
   } catch (err) {
     res.status(500).json({ message: err.message });

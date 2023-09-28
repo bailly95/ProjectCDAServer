@@ -6,7 +6,6 @@ const Project = db.project;
 //verify for session
 verifyToken = (req, res, next) => {
   let token = req.session.token;
-
   if (!token) {
     return res.status(403).send({
       message: "No token provided!",

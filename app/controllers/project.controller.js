@@ -49,7 +49,7 @@ exports.createProject = async (req, res) => {
           });
 
         //   const project = await Project.findByPk(projectId);
-        res.status(200).json({ tasks});
+        res.status(200).json(tasks);
     } catch (error) {
         res.status(500).json({ error: 'Internal server error'+error });
     }

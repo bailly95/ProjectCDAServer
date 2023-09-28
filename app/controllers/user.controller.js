@@ -154,7 +154,7 @@ exports.updatePassword = async (req, res) => {
 exports.getProjectByUserId = async (req, res) => {
   try {
       const userId = req.params.userId;
-      const projects = await User.findAll({
+      const user = await User.findOne({
           where: {
               id: userId,
           },
@@ -162,7 +162,7 @@ exports.getProjectByUserId = async (req, res) => {
               Project
           ]
         });
-      res.status(200).json(projects);
+      res.status(200).json(user.projects);
   } catch (error) {
       res.status(500).json({ error: 'Internal server error'+error });
   }

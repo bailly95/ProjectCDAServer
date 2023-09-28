@@ -33,6 +33,7 @@ app.use(
   cookieSession({
     name: "project-manager-session",
     keys: [process.env.COOKIE_SECRET], // should use as secret environment variable
+    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   })
 );
