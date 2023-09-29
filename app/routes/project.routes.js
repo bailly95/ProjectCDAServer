@@ -12,7 +12,8 @@ router.get(
 
 router.post("/", authJwt.verifyToken, controller.createProject);
 
-router.get("/:projectId", authJwt.verifyToken, controller.getProject);
+// router.get("/:projectId", authJwt.verifyToken, controller.getProject);
+router.get("/:projectId",  controller.getProject);
 
 router.post("/", controller.createProject);
 
