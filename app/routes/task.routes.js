@@ -5,6 +5,7 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/task.controller");
 
 router.post("/", authJwt.verifyToken, controller.createTask);
+router.get("/:id", authJwt.verifyToken, controller.getTask);
 
 router.put("/:id", authJwt.verifyToken, controller.updateTask);
 

@@ -19,10 +19,20 @@ exports.createTask = async (req, res) => {
   }
 };
 
-exports.updateTask = (req, res) => {
-  res.status(500).send({
-    message: "Not implemented!",
-  });
+exports.updateTask = async (req, res) => {
+  console.log(req.body);
+  try {
+    const taskId = req.params.id;
+    const task = await Task.findByPk(taskId);
+    if (!task) {
+      return res.status(404).send({ message: "Task not found." });
+    }
+    await task.update({ name: req.body.name, description: req.body.description, duration: req.body.duration ,status:req.body.status });
+    return res.status(200).send({ message: "Task updated successfully." });
+  } catch (err) {
+    return res.status(408).json({ error: err });
+  }
+  
 };
 
 exports.deleteTask = async (req, res) => {
@@ -63,3 +73,17 @@ exports.updateStatusTask = async (req, res) => {
     return res.status(408).json({ error: err });
   }
 };
+
+  exports.getTask = async (req, res) => {
+    try {
+      const taskId = req.params.id;
+      const task = await Task.findByPk(taskId);
+      if (!task) {
+        return res.status(404).send({ message: "Task not found." });
+      }
+      return res.status(200).send(task);
+    } catch (err) {
+      return res.status(408).json({ error: err });
+    }
+  }
+
