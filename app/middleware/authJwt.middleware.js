@@ -45,9 +45,10 @@ isAdmin = async (req, res, next) => {
 };
 
 isProjectOwner = async (req, res, next) => {
-  const creatorId = parseInt(req.params.creatorId);
+  const creatorIdParams = parseInt(req.params.creatorId);
+  const creatorIdBody = parseInt(req.body.creatorId);
   const projectId = req.params.projectId;
-
+  const creatorId = creatorIdParams || creatorIdBody;
   try {
     const project = await Project.findByPk(projectId);
 

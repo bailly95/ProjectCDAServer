@@ -4,9 +4,8 @@ const Comment = db.comment;
 
 exports.createComment = async (req, res) => {
     try {
-        const { name, description,taskId,userId } = req.body;
+        const { description,taskId,userId } = req.body;
         const comment = await Comment.create({
-            name: name,
             description: description,
             taskId:taskId,
             userId:userId

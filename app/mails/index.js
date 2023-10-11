@@ -1,6 +1,8 @@
 const newUser = require("./newUser/newUser.mail");
-const resestPassword = require("./resetPassword/resetPassword.mail");
+const resetPassword = require("./resetPassword/resetPassword.mail");
+const assign = require("./assign/assign.mail");
 module.exports = {
   newUser,
-  resetPassword
+  resetPassword,
+  assign
 };

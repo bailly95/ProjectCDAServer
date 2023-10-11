@@ -20,7 +20,6 @@ exports.createTask = async (req, res) => {
 };
 
 exports.updateTask = async (req, res) => {
-  console.log(req.body);
   try {
     const taskId = req.params.id;
     const task = await Task.findByPk(taskId);
@@ -87,3 +86,18 @@ exports.updateStatusTask = async (req, res) => {
     }
   }
 
+  exports.assignTask = async (req, res) => {
+    try {
+      const taskId = req.params.id;
+      const userId = req.params.userId;
+      const task = await Task.findByPk(taskId);
+      if (!task) {
+        return res.status(404).send({ message: "Task not found." });
+      }
+      task.userId = userId;
+      await task.save();
+      return res.status(200).send({ message: "Task assigned successfully." });
+    } catch (err) {
+      return res.status(408).json({ error: err });
+    }
+  }

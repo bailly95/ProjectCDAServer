@@ -20,6 +20,7 @@ db.role = require("../models/role.model.js")(sequelize);
 db.comment = require("../models/comment.model.js")(sequelize);
 db.project = require("../models/project.model.js")(sequelize);
 db.task = require("../models/task.model.js")(sequelize);
+db.notification = require("../models/notification.model.js")(sequelize);
 
 //Many to Many
 //role => user
@@ -62,6 +63,10 @@ db.comment.belongsTo(db.task, {
 db.comment.belongsTo(db.user, {
   foreignKey: "userId",
 });
+//user => notification
+db.notification.belongsTo(db.user, {
+  foreignKey: "userId",
+})
 
 db.ROLES = ["user", "admin"];
 

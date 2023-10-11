@@ -12,9 +12,12 @@ router.get(
 
 router.post("/", authJwt.verifyToken, controller.createProject);
 
-// router.get("/:projectId", authJwt.verifyToken, controller.getProject);
-router.get("/:projectId",  controller.getProject);
+router.get("/:projectId", authJwt.verifyToken, controller.getProject);
 
-router.post("/", controller.createProject);
+router.post("/", authJwt.verifyToken, controller.createProject);
+
+router.delete("/:projectId", authJwt.verifyToken, controller.deleteProject);
+
+router.post("/:projectId", [authJwt.verifyToken, authJwt.isProjectOwner], controller.assignProject);
 
 module.exports = router;
